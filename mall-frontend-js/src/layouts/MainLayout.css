@@ -1,5 +1,36 @@
+
 .headline {
-    font-size: large;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 100%;
+}
+.headline .headlineText {
+    font-size: x-large;
     color: azure;
     font-weight: bold;
+}
+.headline .linkText {
+    font-size: large;
+    color: azure;
+    text-align: center;
+    font-weight: bold;
+    margin-left: 50%;
+}
+.headline .linkIcon {
+    font-size: x-large;
+    color: azure;
+    text-align: center;
+    margin-left: 50%;
+}
+.headline .search {
+    margin-top: 16px;
+}
+.site-layout {
+    padding: 0 10%;
+}
+
+.site-layout .container {
+    min-height: 1000px;
+    padding: 20px 50px 50px;
+    background-color: white;
 }

@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    password: Wang1599!!!!
+    username: root
+    url: jdbc:mysql://124.223.47.124:3306/spring_tutorial?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+
+
