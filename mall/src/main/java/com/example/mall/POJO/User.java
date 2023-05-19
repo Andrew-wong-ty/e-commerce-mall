@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
-    private String userName;
+    private String username;
 
     private String password;
 
@@ -48,7 +48,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "Id=" + Id +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +

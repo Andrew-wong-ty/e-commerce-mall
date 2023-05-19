@@ -1,20 +1,28 @@
 package com.example.mall.JPAtest;
 
 
-import com.example.mall.Constant.GoodsStatus;
+import com.example.mall.constant.GoodsStatus;
+import com.example.mall.constant.OrderStatus;
 import com.example.mall.POJO.Goods;
+import com.example.mall.POJO.Orders;
 import com.example.mall.POJO.Seller;
+import com.example.mall.POJO.User;
 import com.example.mall.repository.GoodsRepository;
+import com.example.mall.repository.OrdersRepository;
 import com.example.mall.repository.SellerRepository;
+import com.example.mall.repository.UserRepository;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,6 +31,10 @@ public class Test {
     private GoodsRepository goodsRepository;
     @Autowired
     private SellerRepository sellerRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private OrdersRepository ordersRepository;
 
     @org.junit.Test
     public void addGoods() {
@@ -40,7 +52,36 @@ public class Test {
 
     @org.junit.Test
     public void queryGoods() {
+//        List<Goods> goods = goodsRepository.findAllById(Collections.singletonList(5L));
+        Sort.TypedSort<Goods> goodsTypedSort = Sort.sort(Goods.class);
+        Sort goodsSort = goodsTypedSort.by(Goods::getGoodsSales).descending();
+        Pageable pageable = PageRequest.of(0,3, goodsSort);
+//        Page<Goods> goods2 = goodsRepository.findAll(pageable);
+        Goods goods = goodsRepository.findOneById(5L);
+        int a = 1;
+    }
+
+
+    @org.junit.Test
+    public void addUsers() {
+        User user1 = new User(null, "1111sdasd","sdasd","sdasd","sdasd","sdasd","sdasd");
+        User user2 = new User(null, "2222sdasd","sdasd","sdasd","sdasd","sdasd","sdasd");
+        userRepository.save(user1);
+        userRepository.save(user2);
+    }
+    @org.junit.Test
+    public void addOrders() {
         List<Goods> goods = goodsRepository.findAllById(Collections.singletonList(5L));
-        System.out.println(goods.toString());
+        List<User> users = userRepository.findAllById(Collections.singletonList(13L));
+        Orders orders = new Orders(null,users.get(0),goods.get(0),new BigDecimal(1000),10L,new Date(), OrderStatus.GOTTEN_BY_BUYER);
+        ordersRepository.save(orders);
+    }
+
+    @org.junit.Test
+    public  void selectOrdersByUser() {
+        List<Orders> orders = ordersRepository.findAllById(Collections.singletonList(15L));
+
+        Boolean res = userRepository.existsUserByUsername("1111sdasd");
+        int debug = 1;
     }
 }

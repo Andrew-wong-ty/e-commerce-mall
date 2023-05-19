@@ -6,6 +6,7 @@ import React, {useState} from "react";
 import {Outlet,Link } from "react-router-dom";
 import "./MainLayout.css"
 import {Layout, Menu, theme ,Input, Space, Col, Row } from 'antd';
+import UserIcon from "../components/UserIcon";
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
@@ -47,7 +48,11 @@ const MainLayout = () => {
                         </Link>
                     </Col>
                     <Col span={2}>
-                        <span className="linkIcon"><UserOutlined /></span>
+                        {/*<span className="linkIcon"><UserOutlined /></span>*/}
+                        <div className="linkIcon">
+                            <UserIcon/>
+                        </div>
+
                     </Col>
                     <Col span={2}>
 

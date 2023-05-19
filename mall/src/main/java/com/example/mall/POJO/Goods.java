@@ -1,6 +1,6 @@
 package com.example.mall.POJO;
 
-import com.example.mall.Constant.GoodsStatus;
+import com.example.mall.constant.GoodsStatus;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -25,9 +25,9 @@ public class Goods {
     private BigDecimal goodsDiscount;
     private Long goodsSales;
     private String goodsCover;
-    private String GoodsDetailImages;
+    private String goodsDetailImages;
     @Enumerated(EnumType.STRING)
-    private GoodsStatus GoodsCurrStatus;
+    private GoodsStatus goodsCurrStatus;
 
     @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name = "seller_id", nullable = false) // 会创建一个seller_id字段, 对应的是Seller中的主键
@@ -57,8 +57,8 @@ public class Goods {
                 ", goodsDiscount=" + goodsDiscount +
                 ", goodsSales=" + goodsSales +
                 ", goodsCover='" + goodsCover + '\'' +
-                ", GoodsDetailImages='" + GoodsDetailImages + '\'' +
-                ", GoodsCurrStatus=" + GoodsCurrStatus +
+                ", goodsDetailImages='" + goodsDetailImages + '\'' +
+                ", goodsCurrStatus=" + goodsCurrStatus +
                 '}';
     }
 }

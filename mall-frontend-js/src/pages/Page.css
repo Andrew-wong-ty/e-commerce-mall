@@ -1,0 +1,6 @@
+.loginForm {
+    position:absolute;
+    left:50%;    /* 定位父级的50% */
+    top:50%;
+    transform: translate(-50%,-50%); /*自己的50% */
+}

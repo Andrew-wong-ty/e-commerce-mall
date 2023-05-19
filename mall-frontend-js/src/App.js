@@ -6,6 +6,9 @@ import AllGoods from "./pages/AllGoods";
 import About from "./pages/About";
 import ErrorPage from "./components/Error";
 import GoodsDetail from "./pages/GoodsDetail";
+import UserIcon from "./components/UserIcon";
+import Login from "./pages/Login";
+import MyForm from "./pages/Test";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +34,14 @@ const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path:"test",
+        element: <MyForm/>
+    },
+    {
+        path:"login",
+        element: <Login/>
+    }
 
 ])
 

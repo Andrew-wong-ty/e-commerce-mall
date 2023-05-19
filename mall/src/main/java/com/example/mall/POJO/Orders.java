@@ -1,7 +1,7 @@
 package com.example.mall.POJO;
 
 
-import com.example.mall.Constant.OrderStatus;
+import com.example.mall.constant.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
