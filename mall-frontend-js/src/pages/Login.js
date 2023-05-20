@@ -9,7 +9,6 @@ import httpService from "../configs/HttpService";
 import {postLogin} from "../configs/services";
 import {loginStatus, logoutStatus, increment, setCount} from "../features/userSlice";
 import { useSelector, useDispatch } from 'react-redux'
-import globalState from "../store/state";
 
 const Login = () => {
     const navigate = useNavigate()
@@ -23,7 +22,6 @@ const Login = () => {
             const response = JSON.parse(res.data)
             console.log(response)
             if(response.code===200){
-                globalState.setUserLoggedInStatus(response.object)
                 navigate("/")
             }
 

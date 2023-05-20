@@ -36,7 +36,7 @@ public class LoginController {
         if(loginDTO.getIdentity().equals(BUYER_IDENTITY)) {
             User user = userService.loginByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
             if (user!=null){
-                String token = JwtUtil.generateLoginToken(user.getId().toString(), user.getUsername());
+                String token = JwtUtil.generateLoginToken(user.getId().toString(), user.getUsername(), BUYER_IDENTITY);
                 response.setHeader("Authorization", token);
                 CookieUtil.setCookie(response, Constant.JWT_COOKIE_KEY, token);
                 return ResponseObject.success(user);

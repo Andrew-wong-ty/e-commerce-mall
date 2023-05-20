@@ -1,23 +1,37 @@
+import {useDispatch} from "react-redux";
+import {setCount, loginStatus, logoutStatus} from "../features/userSlice";
 import {
     ShoppingCartOutlined,
     UserOutlined
 } from '@ant-design/icons';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Outlet,Link } from "react-router-dom";
 import "./MainLayout.css"
 import {Layout, Menu, theme ,Input, Space, Col, Row } from 'antd';
 import UserIcon from "../components/UserIcon";
+import {postAccessToken} from "../configs/services";
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
+
 const MainLayout = () => {
-    const {role,setRole} = useState("user"); // 用户身份标识, user or seller
-    const {
-        token: { colorBgContainer },
-    } = theme.useToken();
+    // const {
+    //     token: { colorBgContainer },
+    // } = theme.useToken();
     const searchGoods = (value) => {
         console.log("Search:", value);
     }
+    const dispatch = useDispatch()
+    useEffect(() => {
+        // 在页面初始化的时候验证本地的JWT token是否过期, 如果没有过期, 后台会解析JWT token并且返回里面的内容, 包括(user id, name, identity)
+        postAccessToken().then(res=>{
+            const response = JSON.parse(res.data)
+            dispatch(loginStatus(response.object))
+        }).catch(err=>{
+            console.log("本地无身份或身份过期, err:", err)
+            dispatch(logoutStatus())
+        })
+    }, []);
     return (
         <Layout>
             <Header

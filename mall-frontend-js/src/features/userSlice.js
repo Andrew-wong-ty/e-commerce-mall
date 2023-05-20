@@ -1,13 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
+import LocalStorageUtil from "../store/localStorageUtil";
+import Constant from "../store/constant";
 
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
+        info: {
+            username: "-1",
+            id: "-1",
+            isLogin: false,
+            avatarLink: "-1",
+            identity: "-1", //游客
+        },
         count: 0,
-        username: "-1",
-        id: "-1",
-        isLogin: false,
-        avatarLink: "-1",
+
     },
     reducers: {
         increment: state => {
@@ -18,17 +24,21 @@ export const userSlice = createSlice({
         },
         // 重新初始化state, 适用于用户退出
         logoutStatus: state => {
-            state.count = 0;
-            state.username = "-1";
-            state.id = "-1";
-            state.isLogin = false;
-            state.avatarLink = "-1";
+            state.info.count = 0;
+            state.info.username = "-1";
+            state.info.id = "-1";
+            state.info.isLogin = false;
+            state.info.avatarLink = "-1";
+            state.info.identity = "-1";
+            // 把JWT token从本地移除
+            LocalStorageUtil.removeData(Constant.JWT_TOKEN_KEY)
         },
         loginStatus: (state, action) => {
-            state.username = action.payload.username;
-            state.id = action.payload.id;
-            state.isLogin = true;
-            state.avatarLink = action.payload.avatarLink;
+            state.info.username = action.payload.username;
+            state.info.id = action.payload.userId;
+            state.info.isLogin = true;
+            // state.info.avatarLink = action.payload.avatarLink;
+            state.info.identity = action.payload.identity
         }
     }
 })

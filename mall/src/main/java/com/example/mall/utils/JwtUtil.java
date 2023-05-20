@@ -35,10 +35,11 @@ public class JwtUtil {
         return claims;
     }
 
-    public static String generateLoginToken(String userId, String username) {
+    public static String generateLoginToken(String userId, String username, String identity) {
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
         map.put("username", username);
+        map.put("identity", identity);
         return generateToken(map);
     }
 

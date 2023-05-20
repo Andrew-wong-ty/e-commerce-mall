@@ -7,7 +7,15 @@ class LocalStorageUtil {
     // 从 LocalStorage 获取数据
     static getData(key) {
         const value = localStorage.getItem(key);
-        return value ? JSON.parse(value) : null;
+        if (value === null) {
+            return null
+        } else if (value === undefined || value==="undefined") {
+            return null
+        } else {
+            // 成功获取到值
+            return JSON.parse(value);
+        }
+
     }
 
     // 检查 LocalStorage 中是否存在指定的数据

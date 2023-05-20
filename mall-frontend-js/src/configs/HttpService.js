@@ -8,13 +8,11 @@ const httpService = axios.create({
     withCredentials: true,
     transformRequest: [function (data, headers) {
         // 对发送的 data 进行任意转换处理
-        console.log("request拦截器data:",data)
         data = JSON.stringify(data)
         return data;
     }],
     transformResponse: [function (data) {
         // 对接收的 data 进行任意转换处理
-        console.log("response接收器data:",data)
         return data;
     }],
 });
@@ -24,7 +22,9 @@ httpService.defaults.headers['Access-Control-Allow-Origin'] = '*';
 httpService.interceptors.response.use(
     (response) => {
         const authorization = response.headers['authorization'];
-        LocalStorageUtil.setData(Constant.JWT_TOKEN_KEY, authorization)
+        if(authorization!==undefined && authorization!==null) {
+            LocalStorageUtil.setData(Constant.JWT_TOKEN_KEY, authorization.toString())
+        }
         return response
     },
     (error) => {
