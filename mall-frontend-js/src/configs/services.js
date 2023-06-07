@@ -12,3 +12,7 @@ export const postAccessToken = () => {
     }
     return httpService.post("/security/jwtValidate", jwtToken);
 }
+
+export const postNewProduct = (data) => httpService.post('/goods/new', data)
+
+export const getProductBySellerId = (data) => httpService.post('/goods/getProductById', data)

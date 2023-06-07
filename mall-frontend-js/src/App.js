@@ -10,7 +10,7 @@ import UserIcon from "./components/UserIcon";
 import Login from "./pages/Login";
 import MyForm from "./pages/Test";
 import {postAccessToken} from "./configs/services";
-
+import SellerProducts from "./pages/SellerProducts";
 
 
 const router = createBrowserRouter([
@@ -33,9 +33,18 @@ const router = createBrowserRouter([
                 element: <About/>,
             },
             {
+                path:"products",
+                element: <SellerProducts/>,
+            },
+            // {
+            //     path:"myProduct",
+            //     element: <NewProductForm/>,
+            // },
+            {
                 path:"details/:detailId",
                 element: <GoodsDetail/>,
             },
+
         ]
     },
     {

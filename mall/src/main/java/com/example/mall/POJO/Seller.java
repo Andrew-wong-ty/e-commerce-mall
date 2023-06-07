@@ -1,5 +1,6 @@
 package com.example.mall.POJO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -28,7 +29,8 @@ public class Seller {
 
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "seller",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "seller",fetch=FetchType.LAZY) // 在需要用到LAZY loading的方法加上@Transactional
+    @JsonIgnore
     private List<Goods> goodsList;
 
     @Override
@@ -53,7 +55,6 @@ public class Seller {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", goodsList=" + goodsList +
                 '}';
     }
 }

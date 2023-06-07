@@ -24,11 +24,11 @@ function getIconItems(userInfo) {
             {label: 'Account Info', key: '2', disabled: !userInfo.isLogin},
             {label: 'Logout', key: '3', disabled: !userInfo.isLogin}
         ]
-    } else if(userInfo.identity===Constant.BUYER_IDENTITY) {
+    } else if(userInfo.identity===Constant.SELLER_IDENTITY) {
         return [
             {label: 'Orders', key: '4', disabled: false},
             {label: 'Products', key: '5', disabled: false},
-            {label: 'Account Info', key: '5', disabled: false},
+            {label: 'Account Info', key: '6', disabled: false},
             {label: 'Logout', key: '3', disabled: false}
         ]
     } else {
@@ -68,6 +68,12 @@ const UserIcon = () => {
             case '3':
             {
                 dispatch(logoutStatus())
+                break
+            }
+            // 跳转到商品管理页面
+            case '5':
+            {
+                navigate("products")
                 break
             }
             default:

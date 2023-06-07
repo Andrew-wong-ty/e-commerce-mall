@@ -42,12 +42,12 @@ public class Test {
 //        Seller seller2  = new Seller(null, "2","2","2","2","2",null);
 //        sellerRepository.save(seller1);
 //        sellerRepository.save(seller2);
-        for (int i = 0; i < 3; i++) {
-            String temp = Integer.toString(i);
-            BigDecimal bigDecimal= new BigDecimal(100);
-            Goods goods = new Goods(null,temp,bigDecimal,temp,temp,bigDecimal,1L,temp,temp, GoodsStatus.ON_SALE,seller1);
-            goodsRepository.save(goods);
-        }
+//        for (int i = 0; i < 3; i++) {
+//            String temp = Integer.toString(i);
+//            BigDecimal bigDecimal= new BigDecimal(100);
+//            Goods goods = new Goods(null,temp,bigDecimal,temp,temp,bigDecimal,1L,temp,temp, GoodsStatus.ON_SALE,seller1);
+//            goodsRepository.save(goods);
+//        }
     }
 
     @org.junit.Test

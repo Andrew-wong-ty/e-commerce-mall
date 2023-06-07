@@ -1,3 +1,4 @@
+import {validateIdentification} from "../utils/serviceUtils";
 import {useDispatch} from "react-redux";
 import {setCount, loginStatus, logoutStatus} from "../features/userSlice";
 import {
@@ -14,6 +15,7 @@ const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
 
+
 const MainLayout = () => {
     // const {
     //     token: { colorBgContainer },
@@ -24,13 +26,7 @@ const MainLayout = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         // 在页面初始化的时候验证本地的JWT token是否过期, 如果没有过期, 后台会解析JWT token并且返回里面的内容, 包括(user id, name, identity)
-        postAccessToken().then(res=>{
-            const response = JSON.parse(res.data)
-            dispatch(loginStatus(response.object))
-        }).catch(err=>{
-            console.log("本地无身份或身份过期, err:", err)
-            dispatch(logoutStatus())
-        })
+        validateIdentification(dispatch)
     }, []);
     return (
         <Layout>
@@ -49,12 +45,16 @@ const MainLayout = () => {
                     <Col span={6}>
                         <span className="headlineText">E-Commerce Mall</span>
                     </Col>
-                    <Col span={12}>
+                    <Col span={1}>
+                    </Col>
+                    <Col span={10}>
                         <Search
                             placeholder="Search input item"
                             onSearch={searchGoods}
                             className="search"
                         />
+                    </Col>
+                    <Col span={1}>
                     </Col>
                     <Col span={2}>
                         <Link to={`all`}>

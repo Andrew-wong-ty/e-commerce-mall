@@ -14,8 +14,8 @@ public interface GoodsRepository extends JpaRepository<Goods, Long> {
     Goods findOneById(Long id);
 
     // 根据商家选出所有的产品
-    @Query("select g from Goods g where g.seller.Id = ?1")
-    Page<Goods> findAllGoodsBySeller(Long sellerId, Pageable pageable);
+    @Query("select g from Goods g where g.seller.Id = ?1 and g.goodsCurrStatus <> ?2")
+    Page<Goods> findAllGoodsBySeller(Long sellerId, GoodsStatus goodsStatus , Pageable pageable);
 
     // 根据商品状态选出商品
     Page<Goods> findAllByGoodsCurrStatus(GoodsStatus goodsCurrStatus, Pageable pageable);

@@ -18,16 +18,16 @@ public class Goods {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
-    private String goodsName;
-    private BigDecimal goodsPrice;
-    private String goodsHeadline;
-    private String goodsDescription;
-    private BigDecimal goodsDiscount;
-    private Long goodsSales;
-    private String goodsCover;
-    private String goodsDetailImages;
+    private String goodsName; //1
+    private BigDecimal goodsPrice; //1
+    private String goodsHeadline; //1
+    private String goodsDescription;//1
+    private BigDecimal goodsDiscount;//1
+    private Long goodsSales;//1
+    private Long goodsNum;//1
+    private String goodsDetailImages;//1
     @Enumerated(EnumType.STRING)
-    private GoodsStatus goodsCurrStatus;
+    private GoodsStatus goodsCurrStatus;//1
 
     @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name = "seller_id", nullable = false) // 会创建一个seller_id字段, 对应的是Seller中的主键
@@ -56,7 +56,6 @@ public class Goods {
                 ", goodsDescription='" + goodsDescription + '\'' +
                 ", goodsDiscount=" + goodsDiscount +
                 ", goodsSales=" + goodsSales +
-                ", goodsCover='" + goodsCover + '\'' +
                 ", goodsDetailImages='" + goodsDetailImages + '\'' +
                 ", goodsCurrStatus=" + goodsCurrStatus +
                 '}';
