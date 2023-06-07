@@ -16,3 +16,7 @@ export const postAccessToken = () => {
 export const postNewProduct = (data) => httpService.post('/goods/new', data)
 
 export const getProductBySellerId = (data) => httpService.post('/goods/getProductById', data)
+
+export const getAllOnSaleProducts = (data) => httpService.post('/goods/getAllGoods', data)
+
+export const getGoodsByGoodsId = (data) => httpService.post('/goods/getGoodsById', data)

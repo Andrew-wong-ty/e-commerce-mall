@@ -16,3 +16,31 @@
     top:50%;
     transform: translate(-50%,-50%); /*自己的50% */
 }
+
+.product-detail {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-detail-price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.product-detail-name {
+    font-size: 16px;
+    color: #1890ff;
+    margin-bottom: 8px;
+}
+
+.product-detail-description {
+    font-size: 14px;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 设置最大显示行数为2行 */
+    -webkit-box-orient: vertical;
+}

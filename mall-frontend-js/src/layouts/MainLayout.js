@@ -6,7 +6,7 @@ import {
     UserOutlined
 } from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
-import {Outlet,Link } from "react-router-dom";
+import {Outlet, Link, useNavigate} from "react-router-dom";
 import "./MainLayout.css"
 import {Layout, Menu, theme ,Input, Space, Col, Row } from 'antd';
 import UserIcon from "../components/UserIcon";
@@ -23,6 +23,7 @@ const MainLayout = () => {
     const searchGoods = (value) => {
         console.log("Search:", value);
     }
+    const navigate = useNavigate();
     const dispatch = useDispatch()
     useEffect(() => {
         // 在页面初始化的时候验证本地的JWT token是否过期, 如果没有过期, 后台会解析JWT token并且返回里面的内容, 包括(user id, name, identity)
@@ -43,7 +44,7 @@ const MainLayout = () => {
             >
                 <Row className="headline">
                     <Col span={6}>
-                        <span className="headlineText">E-Commerce Mall</span>
+                        <span className="headlineText" onClick={()=>{navigate("/")}}>E-Commerce Mall</span>
                     </Col>
                     <Col span={1}>
                     </Col>

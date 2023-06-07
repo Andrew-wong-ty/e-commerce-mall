@@ -1,6 +1,7 @@
 package com.example.mall.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,9 @@ import java.util.UUID;
 @RequestMapping("/files")
 @Slf4j
 public class FileController {
-
-    private static final String FILE_UPLOAD_PATH = "C:\\Users\\24508\\IdeaProjects\\e-commerce-mall\\mall\\src\\main\\resources\\upload"; // 上传文件保存的路径
+    @Value("${project.filepath}")
+    private String FILE_UPLOAD_PATH;
+//    private static final String FILE_UPLOAD_PATH = "C:\\Users\\24508\\IdeaProjects\\e-commerce-mall\\mall\\src\\main\\resources\\upload"; // 上传文件保存的路径
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {

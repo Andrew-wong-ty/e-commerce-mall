@@ -11,4 +11,6 @@ spring:
     hibernate:
       ddl-auto: update
 
+project:
+  filepath: C:\\Users\\24508\\IdeaProjects\\e-commerce-mall\\mall\\src\\main\\resources\\upload
 

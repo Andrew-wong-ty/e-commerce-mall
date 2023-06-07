@@ -3,6 +3,7 @@ package com.example.mall.controller;
 import com.example.mall.POJO.DTO.LoginDTO;
 import com.example.mall.POJO.DTO.ResponseObject;
 import com.example.mall.POJO.Goods;
+import com.example.mall.constant.GoodsStatus;
 import com.example.mall.service.GoodsService;
 import com.example.mall.service.SellerService;
 import com.example.mall.utils.Constant;
@@ -43,10 +44,22 @@ public class GoodsController {
         }
     }
 
+    @RequestMapping(value = "/getGoodsById", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseObject getGoodsById(@RequestBody Map<String, String> paramMap) {
+        try {
+            Goods goods = goodsService.getOneById(Long.parseLong(paramMap.get("goodsId")));
+            return ResponseObject.success(goods);
+        } catch (Exception e) {
+            log.error("getProductById ERROR=>{}",e.getMessage(), e);
+            return ResponseObject.error();
+        }
+    }
+
 
     @RequestMapping(value = "/getProductById", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseObject getProductById(@RequestBody Map<String, String> paramMap) {
+    public ResponseObject getProductBySellerId(@RequestBody Map<String, String> paramMap) {
         Map<String, Object> result = new HashMap<>();
         try {
             String sellerId = paramMap.get("sellerId");
@@ -55,6 +68,26 @@ public class GoodsController {
             assert nthPage>=0;
             assert pageSize>=0;
             Page<Goods> goods = goodsService.getPageGoodsBySellerId(sellerId, pageSize, nthPage);
+            result.put("totalElements", goods.getTotalElements());
+            result.put("totalPages", goods.getTotalPages());
+            result.put("goods", goods.getContent());
+            return ResponseObject.success(result);
+        } catch (Exception e) {
+            log.error("getProductById ERROR=>{}",e.getMessage(), e);
+            return ResponseObject.error();
+        }
+    }
+
+    @RequestMapping(value = "/getAllGoods", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseObject getAllGoods(@RequestBody Map<String, String> paramMap) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            int pageSize = Integer.parseInt(paramMap.get("pageSize"));
+            int nthPage = Integer.parseInt(paramMap.get("nthPage"))-1;
+            assert nthPage>=0;
+            assert pageSize>=0;
+            Page<Goods> goods = goodsService.getGoodsByStatus(GoodsStatus.ON_SALE, nthPage, pageSize, true);
             result.put("totalElements", goods.getTotalElements());
             result.put("totalPages", goods.getTotalPages());
             result.put("goods", goods.getContent());
