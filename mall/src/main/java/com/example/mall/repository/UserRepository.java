@@ -2,6 +2,7 @@ package com.example.mall.repository;
 
 import com.example.mall.POJO.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -11,4 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsUserByUsernameAndPassword(String username, String password);
     // 根据用户名和密码查询出用户 (显示用户信息页面)
     User findUserByUsernameAndPassword(String username, String password);
+
+    @Query("select distinct u from User u where u.Id = ?1")
+    User findOneById(Long id);
 }

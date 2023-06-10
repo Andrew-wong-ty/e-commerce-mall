@@ -1,16 +1,18 @@
+import {DownOutlined} from "@ant-design/icons";
 import {useDispatch} from "react-redux";
 import {logoutStatus} from "../features/userSlice";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {UserOutlined} from "@ant-design/icons";
-import {Dropdown, Space} from 'antd';
+import {Dropdown, Space, Avatar} from 'antd';
 import "./General.css"
 import Constant from "../store/constant";
 import {useSelector} from "react-redux";
 
+
 // 根据用户信息返回用户头像下拉框
 function getIconItems(userInfo) {
-    console.log("getIconItems.userInfo: ",userInfo)
+    // console.log("getIconItems.userInfo: ",userInfo)
     if(userInfo.identity===Constant.TRAVELER_IDENTITY) {
         return [
             {label: 'My Orders', key: '-1', disabled: true},
@@ -65,9 +67,16 @@ const UserIcon = () => {
                 break
             }
             // 执行登出逻辑
+            case '2':
+            {
+                navigate("/userinfo")
+                break
+            }
+            // 执行登出逻辑
             case '3':
             {
                 dispatch(logoutStatus())
+                navigate("/")
                 break
             }
             // 跳转到商品管理页面
@@ -91,7 +100,8 @@ const UserIcon = () => {
             >
                 <a onClick={(e) => e.preventDefault()}>
                     <Space id="userIcon">
-                        <UserOutlined />
+                        {/*<UserOutlined />*/}
+                        <Avatar src={userInfo.avatarLink} /><DownOutlined style={{ fontSize: '12px'}} />
                     </Space>
                 </a>
             </Dropdown>

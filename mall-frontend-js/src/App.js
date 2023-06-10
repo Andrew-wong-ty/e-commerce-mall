@@ -11,7 +11,8 @@ import Login from "./pages/Login";
 import MyForm from "./pages/Test";
 import {postAccessToken} from "./configs/services";
 import SellerProducts from "./pages/SellerProducts";
-
+import UserInfo from "./pages/UserInfo";
+import Cart from "./pages/Cart";
 
 const router = createBrowserRouter([
     {
@@ -36,10 +37,14 @@ const router = createBrowserRouter([
                 path:"products",
                 element: <SellerProducts/>,
             },
-            // {
-            //     path:"myProduct",
-            //     element: <NewProductForm/>,
-            // },
+            {
+                path:"userinfo",
+                element: <UserInfo/>,
+            },
+            {
+                path:"cart",
+                element: <Cart/>,
+            },
             {
                 path:"details/:detailId",
                 element: <GoodsDetail/>,

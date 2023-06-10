@@ -29,6 +29,9 @@ public class Seller {
 
     private String phoneNumber;
 
+    // 头像
+    private String avatar;
+
     @OneToMany(mappedBy = "seller",fetch=FetchType.LAZY) // 在需要用到LAZY loading的方法加上@Transactional
     @JsonIgnore
     private List<Goods> goodsList;

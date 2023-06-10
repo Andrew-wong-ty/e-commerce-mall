@@ -43,6 +43,17 @@ public class GoodsController {
             return ResponseObject.error();
         }
     }
+    /*
+
+        try {
+            return ResponseObject.success();
+        } catch (Exception e) {
+            log.error("ERROR=>{}",e.getMessage(), e);
+            return ResponseObject.error();
+        }
+
+
+     */
 
     @RequestMapping(value = "/getGoodsById", method = RequestMethod.POST)
     @ResponseBody

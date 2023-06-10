@@ -6,35 +6,10 @@ import ProductDetail from "../components/ProductDetail";
 import { Card} from 'antd';
 import {resolvePath, useNavigate} from "react-router-dom";
 import {getAllOnSaleProducts, getProductBySellerId} from "../configs/services";
-const { Meta } = Card;
 const gridStyle = {
     width: '20%',
     textAlign: 'center',
 };
-const images = [
-    'http://120.24.230.237:9898/files/c14b051471134fbc9e00ab29ca12b226',
-    'http://120.24.230.237:9898/files/a32e0b75fc314cbdb719d6be16e3a326',
-    'http://120.24.230.237:9898/files/832da423f59a426fac5af011885cc6a6',
-];
-const goods = [
-    {
-        image: "http://localhost:8080/files/download/570119d0-0ec1-450c-ba3f-bf1a04243396-FILE-QQ%E6%88%AA%E5%9B%BE20211201031325.jpg",
-        id:'1',
-    },
-    {
-        image: "http://localhost:8080/files/download/570119d0-0ec1-450c-ba3f-bf1a04243396-FILE-QQ%E6%88%AA%E5%9B%BE20211201031325.jpg",
-        id:'2',
-    },
-    {
-        image: "http://localhost:8080/files/download/570119d0-0ec1-450c-ba3f-bf1a04243396-FILE-QQ%E6%88%AA%E5%9B%BE20211201031325.jpg",
-        id:'3',
-    },
-    {
-        image: "http://localhost:8080/files/download/570119d0-0ec1-450c-ba3f-bf1a04243396-FILE-QQ%E6%88%AA%E5%9B%BE20211201031325.jpg",
-        id:'4',
-    },
-]
-
 const contentStyle = {
     marginLeft:'-50px',
     marginRight:'-50px'
@@ -68,13 +43,14 @@ function HomePage() {
             <div style={contentStyle}>
                 <Image
                     src="http://localhost:8080/files/download/81021d57-5f56-4729-8f5e-db56cb3b9795-FILE-pdd.jpg"
+                    preview={false}
                 />
             </div>
             <br/>
             <Card title="Top Sales">
                 {
                     productList.map((item, index)=>(
-                        <Card.Grid style={gridStyle} onClick={()=>{navigate(`details/${item.id}`)}}>
+                        <Card.Grid style={gridStyle} onClick={()=>{navigate(`details/${item.id}`)}} key={index}>
                             <ProductDetail
                                 image={item.goodsDetailImages[0]}
                                 price={`\$${item.goodsPrice}`}

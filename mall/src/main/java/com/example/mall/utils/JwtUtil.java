@@ -35,7 +35,16 @@ public class JwtUtil {
         return claims;
     }
 
-    public static String generateLoginToken(String userId, String username, String identity) {
+    public static String generateLoginToken(String userId, String username, String identity, String avatar) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("username", username);
+        map.put("identity", identity);
+        map.put("avatar", avatar);
+        return generateToken(map);
+    }
+
+    public static String generateSellerLoginToken(String userId, String username, String identity) {
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
         map.put("username", username);

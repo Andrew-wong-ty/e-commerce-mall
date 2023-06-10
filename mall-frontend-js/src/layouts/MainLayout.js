@@ -71,7 +71,7 @@ const MainLayout = () => {
                     </Col>
                     <Col span={2}>
 
-                        <span className="linkIcon"><ShoppingCartOutlined /></span>
+                        <span className="linkIcon" onClick={()=>{navigate("cart")}}><ShoppingCartOutlined /></span>
                     </Col>
                 </Row>
             </Header>

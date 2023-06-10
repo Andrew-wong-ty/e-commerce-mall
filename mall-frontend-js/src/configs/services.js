@@ -20,3 +20,13 @@ export const getProductBySellerId = (data) => httpService.post('/goods/getProduc
 export const getAllOnSaleProducts = (data) => httpService.post('/goods/getAllGoods', data)
 
 export const getGoodsByGoodsId = (data) => httpService.post('/goods/getGoodsById', data)
+
+export const getUserByUserId = (data) => httpService.post('/user/getUserInfo', data)
+
+export const postUpdateUserinfo = (data) => httpService.post('/user/updateUserInfo', data)
+
+export const postAddOrUpdateCart = (data) => httpService.post('/cart/addOrUpdateCart', data)
+
+export const postGetUserCart = (data) => httpService.post('/cart/showUserCart', data)
+
+export const postDeleteCart = (data) => httpService.post('/cart/deleteCart', data)

@@ -38,7 +38,7 @@ public class Test {
 
     @org.junit.Test
     public void addGoods() {
-        Seller seller1  = new Seller(4L, "1","1","1","1","1",null); // 首先获取一个seller
+        Seller seller1  = new Seller(4L, "1","1","1","1","1","1",null); // 首先获取一个seller
 //        Seller seller2  = new Seller(null, "2","2","2","2","2",null);
 //        sellerRepository.save(seller1);
 //        sellerRepository.save(seller2);
