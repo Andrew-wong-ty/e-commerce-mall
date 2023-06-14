@@ -11,9 +11,11 @@ import com.example.mall.repository.GoodsRepository;
 import com.example.mall.repository.OrdersRepository;
 import com.example.mall.repository.SellerRepository;
 import com.example.mall.repository.UserRepository;
+import com.example.mall.service.OrderService;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -35,6 +37,17 @@ public class Test {
     private UserRepository userRepository;
     @Autowired
     private OrdersRepository ordersRepository;
+
+    @Autowired
+    private OrderService orderService;
+
+    @org.junit.Test
+    public void findOrdersByUserId() {
+        Page<Orders> orders = orderService.getPageOrdersByUserId("13", 5, 0);
+        orders.forEach(item->{
+            System.out.println(item.toString());
+        });
+    }
 
     @org.junit.Test
     public void addGoods() {
@@ -73,7 +86,7 @@ public class Test {
     public void addOrders() {
         List<Goods> goods = goodsRepository.findAllById(Collections.singletonList(5L));
         List<User> users = userRepository.findAllById(Collections.singletonList(13L));
-        Orders orders = new Orders(null,users.get(0),goods.get(0),new BigDecimal(1000),10L,new Date(), OrderStatus.GOTTEN_BY_BUYER);
+        Orders orders = new Orders(null,users.get(0),goods.get(0),new BigDecimal(1000),10L,new Date(), OrderStatus.SIGNED);
         ordersRepository.save(orders);
     }
 

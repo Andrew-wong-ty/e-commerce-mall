@@ -2,10 +2,12 @@ package com.example.mall.POJO;
 
 
 import com.example.mall.constant.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,10 +21,10 @@ import java.util.Date;
 @Setter
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private String Id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch=FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -34,7 +36,7 @@ public class Orders {
 
     private Long num;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
     @Enumerated(EnumType.STRING)

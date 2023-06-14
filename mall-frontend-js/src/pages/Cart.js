@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {validateJwt} from "../utils/serviceUtils";
 import Constant from "../store/constant";
 import {useNavigate} from "react-router-dom";
-import {Button, Image, Pagination, Table, Tag} from "antd";
+import {Button, Col, Image, Pagination, Row, Table, Tag} from "antd";
 import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
 import {postAddOrUpdateCart, postDeleteCart, postGetUserCart} from "../configs/services";
 const ButtonGroup = Button.Group;
@@ -16,6 +16,8 @@ function Cart() {
     const [pageSize,setPageSize] = useState(10)
     const [nthPage,setNthPage] = useState(1)
     const [totalItem,setTotalItem] = useState(1)
+    const [selectedGoods, setSelectedGoods] = useState([])
+    const [totalPrice, setTotalPrice] = useState(0);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const onShowSizeChange = (current, pageSize) => {
         setNthPage(current);setPageSize(pageSize);
@@ -24,13 +26,35 @@ function Cart() {
         setNthPage(page);setPageSize(pageSize);
     }
     const onSelectChange = (newSelectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        // console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        // const selectedCart = cartList.filter(
+        //     item => newSelectedRowKeys.includes(item.key)
+        // );
+        // setSelectedGoods(selectedCart);
+        // console.log('selectedCart: ', selectedCart);
         setSelectedRowKeys(newSelectedRowKeys);
     };
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
     };
+    useEffect(()=>{
+        console.log("selectedGoods被改变!")
+        const totalPrice = selectedGoods.reduce(
+            (accumulator, currentValue) =>
+                accumulator + currentValue.goodsDiscount * currentValue.goodsPrice*currentValue.goodsNum,
+            0
+        );
+        console.log("total Price: ", totalPrice )
+        setTotalPrice(totalPrice);
+    }, [selectedGoods])
+    useEffect(()=>{
+        console.log("selectedRowKeys被改变!")
+        const selectedCart = cartList.filter(
+            item => selectedRowKeys.includes(item.key)
+        );
+        setSelectedGoods(selectedCart);
+    }, [selectedRowKeys])
     useEffect(()=>{
         validateJwt().then(res=>{
             const response = JSON.parse(res.data)
@@ -73,6 +97,10 @@ function Cart() {
         postDeleteCart(postRecord).then(res=>{
             const response = JSON.parse(res.data)
             if(response.code===200) {
+                const selectedKey = selectedRowKeys.filter(item=>item!==record.key)
+                const arr = Array.from({ length: selectedKey.length }, (_, index) => index);
+                setSelectedRowKeys(arr)
+                console.log("selectedKey=>", selectedKey)
                 fetchCart()
             }
         })
@@ -159,7 +187,15 @@ function Cart() {
 
     return (
         <div>
-            <h1>Cart</h1>
+            <Row>
+                <Col span={12}>
+                    <h1>Cart</h1> <h2>{selectedRowKeys.length} items, totally ${totalPrice.toFixed(2)}</h2>
+                </Col>
+                <Col span={12}>
+
+                </Col>
+            </Row>
+
             <Table
                 rowSelection={rowSelection}
                 columns={columns}
