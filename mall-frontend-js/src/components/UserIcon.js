@@ -28,7 +28,7 @@ function getIconItems(userInfo) {
         ]
     } else if(userInfo.identity===Constant.SELLER_IDENTITY) {
         return [
-            {label: 'Orders', key: '4', disabled: false},
+            // {label: 'Orders', key: '4', disabled: false},
             {label: 'Products', key: '5', disabled: false},
             {label: 'Account Info', key: '6', disabled: false},
             {label: 'Logout', key: '3', disabled: false}
@@ -64,6 +64,11 @@ const UserIcon = () => {
             case '0':
             {
                 navigate("/login")
+                break
+            }
+            case '1':
+            {
+                navigate("/userOrder")
                 break
             }
             // 执行登出逻辑

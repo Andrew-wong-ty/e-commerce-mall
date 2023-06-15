@@ -5,11 +5,8 @@ import {useNavigate} from "react-router-dom";
 import {Button, Col, Image, message, Pagination, Row, Table, Tag} from "antd";
 import {MinusOutlined, PlusOutlined, MinusCircleOutlined} from "@ant-design/icons";
 import {
-    postAddOrUpdateCart,
-    postDeleteCart,
-    postDeleteFailedOrder,
-    postGetUserCart,
-    postGetUserOrder, postMakeSigned
+    postDeleteFailedOrder, postGetSellerOrder,
+    postGetUserOrder, postMakeDeliver
 } from "../configs/services";
 const ButtonGroup = Button.Group;
 
@@ -17,7 +14,7 @@ function UserOrder() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [orderList, setOrderList] = useState([])
-    const [userId, setUserId] = useState(-1);
+    const [sellerId, setSellerId] = useState(-1);
     const [totalItem,setTotalItem] = useState(0)
     const [pageSize,setPageSize] = useState(5)
     const [nthPage,setNthPage] = useState(1)
@@ -30,9 +27,8 @@ function UserOrder() {
     useEffect(()=>{
         validateJwt().then(res=>{
             const response = JSON.parse(res.data)
-            if(response.code===200 && response.object.identity===Constant.BUYER_IDENTITY) {
-                console.log("user jwt=>", response.object)
-                setUserId(response.object.userId);
+            if(response.code===200 && response.object.identity===Constant.SELLER_IDENTITY) {
+                setSellerId(response.object.userId);
             } else {
                 navigate("/login")
             }
@@ -43,8 +39,8 @@ function UserOrder() {
     },[])
 
     const fetchOrders = () => {
-        if(userId===-1) return;
-        postGetUserOrder({userId:userId, nthPage:nthPage, pageSize:pageSize}).then(res=>{
+        if(sellerId===-1) return;
+        postGetSellerOrder({sellerId:sellerId, nthPage:nthPage, pageSize:pageSize}).then(res=>{
             const response = JSON.parse(res.data)
             if(response.code===200) {
                 const newObjList = response.object.orders.map((item, index) => {
@@ -59,60 +55,24 @@ function UserOrder() {
     }
 
     useEffect(()=>{
-        if(userId===-1) return;
+        if(sellerId===-1) return;
         setLoading(true)
         fetchOrders()
         setLoading(false)
-    },[userId, nthPage, pageSize])
+    },[sellerId, nthPage, pageSize])
 
-    const deleteOrder = (record) => {
-        postDeleteFailedOrder({orderId: record.orderId}).then(res=>{
+    const makeDeliver = (record) =>{
+        postMakeDeliver({orderId:record.orderId}).then(res=>{
             const response = JSON.parse(res.data)
             if(response.code===200) {
-                message.success("Deleted");
+                message.success("Status is updated")
                 fetchOrders()
             }
         })
     }
-
-    const makeSign = (record) => {
-        postMakeSigned({orderId: record.orderId}).then(res=>{
-            const response = JSON.parse(res.data)
-            if(response.code===200) {
-                message.success("Status is updated [Signed]");
-                fetchOrders()
-            }
-        })
-    }
-
     const columns = [
         {
-            title: 'Actions',
-            width: 5,
-            key: 'action2',
-            align: 'center',
-            render: (_, record) => {
-                if(record.orderStatus==="CREATE_FAILED") {
-                    return (
-                        <Button onClick={()=>{deleteOrder(record)}} size="small"  type="circle"  >
-                    <span style={{fontSize:'20px', color:'red'}}>
-                        <MinusCircleOutlined />
-                    </span>
-                        </Button>
-                    )
-                }
-                else if(record.orderStatus==="DELIVERING") {
-                    return (
-                        <Button onClick={()=>{makeSign(record)}} size="small"  type="primary"  >
-                            Sign
-                        </Button>
-                    )
-                }
-
-            },
-        },
-        {
-            title: 'Cover',
+            title: '',
             dataIndex: 'goodsImage',
             key: 'goodsImage',
             align: 'center',
@@ -137,6 +97,30 @@ function UserOrder() {
             key: 'totalPrice',
             align: 'center',
         },
+
+        {
+            title: 'Order Date',
+            dataIndex: 'orderDateTime',
+            key: 'orderDateTime',
+            align: 'center',
+        },
+        {
+            title: 'Username',
+            dataIndex: 'username',
+            key: 'username',
+            align: 'center',
+            render: (_, record) =>
+                (
+                    <Tag color="magenta">{record.username}</Tag>
+                )
+
+        },
+        {
+            title: 'Address',
+            dataIndex: 'address',
+            key: 'address',
+            align: 'center',
+        },
         {
             title: 'Status',
             dataIndex: 'orderStatus',
@@ -152,12 +136,6 @@ function UserOrder() {
                         text = "CREATED";
                         break;
                     }
-                    case "CREATE_FAILED":
-                    {
-                        color = "#f50";
-                        text = "CREATE FAILED";
-                        break;
-                    }
                     case "DELIVERING":
                     {
                         color = "#2db7f5";
@@ -166,14 +144,8 @@ function UserOrder() {
                     }
                     case "SIGNED":
                     {
-                        color = "#0db009";
+                        color = "#03fa2c";
                         text = "SIGNED";
-                        break;
-                    }
-                    case "CREATING":
-                    {
-                        color = "#fae503";
-                        text = "CREATING";
                         break;
                     }
                     default:
@@ -185,23 +157,21 @@ function UserOrder() {
             }
         },
         {
-            title: 'Order Date',
-            dataIndex: 'orderDateTime',
-            key: 'orderDateTime',
+            title: '',
+            key: 'actions',
             align: 'center',
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-            align: 'center',
+            render: (_, record) => {
+                return (
+                    <Button type="primary" disabled={record.orderStatus!=="CREATED"} onClick={()=>{makeDeliver(record)}}>Deliver</Button>
+                )
+            },
         },
 
     ];
 
     return (
         <div>
-            <h1>My Orders</h1>
+            <h1>Orders</h1>
             <Table
                 columns={columns}
                 loading={loading}

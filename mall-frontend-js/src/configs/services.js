@@ -30,3 +30,15 @@ export const postAddOrUpdateCart = (data) => httpService.post('/cart/addOrUpdate
 export const postGetUserCart = (data) => httpService.post('/cart/showUserCart', data)
 
 export const postDeleteCart = (data) => httpService.post('/cart/deleteCart', data)
+
+export const postGetUserOrder = (data) => httpService.post('/order/showUserOrders', data)
+
+export const postGetSellerOrder = (data) => httpService.post('/order/showSellerOrders', data)
+
+export const postMultipleOrdering = (data) => httpService.post('/order/multipleOrdering', data)
+
+export const postDeleteFailedOrder = (data) => httpService.post('/order/deleteFailedOrder', data)
+
+export const postMakeSigned = (data) => httpService.post('/order/makeSigned', data)
+
+export const postMakeDeliver = (data) => httpService.post('/order/makeDeliver', data)

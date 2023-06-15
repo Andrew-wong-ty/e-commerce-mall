@@ -8,9 +8,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface OrdersRepository extends JpaRepository<Orders, Long> {
+public interface OrdersRepository extends JpaRepository<Orders, String> {
     // 根据用户id查询分页订单
     @Query("select o from Orders o where o.user.Id = ?1")
     Page<Orders> findOrdersByUserId(Long userId,Pageable pageable);
     // 根据商家id查询出所有分页订单
+
+    @Query("select o from Orders o where o.seller.Id = ?1 and o.orderStatus <> 'CREATING' and o.orderStatus <> 'CREATE_FAILED'")
+    Page<Orders> findOrdersBySellerId(Long sellerId,Pageable pageable);
+
+    @Query("select distinct o from Orders o where o.Id = ?1")
+    Orders findOneById(String id);
+
 }

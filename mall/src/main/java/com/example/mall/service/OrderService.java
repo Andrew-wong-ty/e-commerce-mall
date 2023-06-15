@@ -16,4 +16,8 @@ public interface OrderService {
     Page<Orders> getPageOrdersByUserId(String userId, int pageSize, int nthPage);
     Map<String, Object> fetchPageOrdersByUserId(String userId, int pageSize, int nthPage);
     boolean saveOrUpdate(Orders order);
+    void deleteOrderById(String orderId);
+    Map<String, Object> fetchPageOrdersBySellerId(String sellerId, int pageSize, int nthPage);
+
+    Orders findOneById(String orderId);
 }

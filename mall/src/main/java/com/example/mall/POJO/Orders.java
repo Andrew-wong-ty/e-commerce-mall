@@ -23,14 +23,17 @@ public class Orders {
     @Id
     private String Id;
 
-    @OneToOne(fetch=FetchType.LAZY)
-    @JsonIgnore
+    @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "goods_id", referencedColumnName = "id")
     private Goods goods;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    private Seller seller;
 
     private BigDecimal onSellPrice;
 

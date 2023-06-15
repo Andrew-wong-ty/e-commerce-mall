@@ -69,12 +69,12 @@ public class kafkaTest {
 //        Thread consumerThread = new Thread(consumer);
 //        consumerThread.start();
 
-        for (int i = 0; i < 10; i++) {
-            User user = new User(Integer.toUnsignedLong(i),"asdas","123","312","31124", "f113f", "sad");
-            Orders order = new Orders(UUID.randomUUID().toString(),user,new Goods(),new BigDecimal("10"),1L,new Date(), OrderStatus.SIGNED);
-            queueProducer.send(Integer.toString(i), order);
-            TimeUnit.SECONDS.sleep(1);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            User user = new User(Integer.toUnsignedLong(i),"asdas","123","312","31124", "f113f", "sad");
+//            Orders order = new Orders(UUID.randomUUID().toString(),user,new Goods(),new BigDecimal("10"),1L,new Date(), OrderStatus.SIGNED);
+//            queueProducer.send(Integer.toString(i), order);
+//            TimeUnit.SECONDS.sleep(1);
+//        }
 //        consumerThread.join();
     }
 

@@ -50,6 +50,15 @@ public class Test {
     }
 
     @org.junit.Test
+    public void findOrdersBySellerId() {
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<Orders> orders = ordersRepository.findOrdersBySellerId(3L,pageable);
+        orders.forEach(item->{
+            System.out.println(item.toString());
+        });
+    }
+
+    @org.junit.Test
     public void addGoods() {
         Seller seller1  = new Seller(4L, "1","1","1","1","1","1",null); // 首先获取一个seller
 //        Seller seller2  = new Seller(null, "2","2","2","2","2",null);
@@ -84,17 +93,11 @@ public class Test {
     }
     @org.junit.Test
     public void addOrders() {
-        List<Goods> goods = goodsRepository.findAllById(Collections.singletonList(5L));
-        List<User> users = userRepository.findAllById(Collections.singletonList(13L));
-        Orders orders = new Orders(null,users.get(0),goods.get(0),new BigDecimal(1000),10L,new Date(), OrderStatus.SIGNED);
-        ordersRepository.save(orders);
+//        List<Goods> goods = goodsRepository.findAllById(Collections.singletonList(5L));
+//        List<User> users = userRepository.findAllById(Collections.singletonList(13L));
+//        Orders orders = new Orders(null,users.get(0),goods.get(0),new BigDecimal(1000),10L,new Date(), OrderStatus.SIGNED);
+//        ordersRepository.save(orders);
     }
 
-    @org.junit.Test
-    public  void selectOrdersByUser() {
-        List<Orders> orders = ordersRepository.findAllById(Collections.singletonList(15L));
 
-        Boolean res = userRepository.existsUserByUsername("1111sdasd");
-        int debug = 1;
-    }
 }

@@ -13,6 +13,8 @@ import {postAccessToken} from "./configs/services";
 import SellerProducts from "./pages/SellerProducts";
 import UserInfo from "./pages/UserInfo";
 import Cart from "./pages/Cart";
+import UserOrder from "./pages/UserOrder";
+import SellerOrder from "./pages/SellerOrder";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
             {
                 path:"userinfo",
                 element: <UserInfo/>,
+            },
+            {
+                path:"sellerOrder",
+                element: <SellerOrder/>,
+            },
+            {
+                path:"userOrder",
+                element: <UserOrder/>,
             },
             {
                 path:"cart",

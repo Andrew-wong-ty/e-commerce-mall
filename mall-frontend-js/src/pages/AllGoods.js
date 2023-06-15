@@ -45,7 +45,7 @@ function AllGoods() {
             <Card >
                 {
                     productList.map((item, index)=>(
-                        <Card.Grid style={gridStyle} onClick={()=>{navigate(`details/${item.id}`)}}>
+                        <Card.Grid style={gridStyle} onClick={()=>{navigate(`/details/${item.id}`)}}>
                             <ProductDetail
                                 image={item.goodsDetailImages[0]}
                                 price={`\$${item.goodsPrice}`}

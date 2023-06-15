@@ -4,7 +4,23 @@ import {validateJwt} from "../utils/serviceUtils";
 import {getProductBySellerId, postNewProduct} from "../configs/services";
 import React, {useEffect, useState, useRef} from "react";
 import {useNavigate} from "react-router-dom";
-import {Button, Form, Input, InputNumber, message, Modal, Select, Upload, Switch, Space, Table, Tag, Image, Pagination} from "antd";
+import {
+    Button,
+    Form,
+    Input,
+    InputNumber,
+    message,
+    Modal,
+    Select,
+    Upload,
+    Switch,
+    Space,
+    Table,
+    Tag,
+    Image,
+    Pagination,
+    Row, Col
+} from "antd";
 import LocalStorageUtil from "../store/localStorageUtil";
 const { TextArea } = Input;
 const normFile = (e) => {
@@ -248,12 +264,20 @@ function SellerProducts() {
 
     return (
         <>
-            <h1><AppstoreOutlined />
-                Products
-                <Button type="primary" onClick={showNewProductModal}>
-                    New Product
-                </Button>
-            </h1>
+            <Row>
+                <Col span={12}>
+                    <h1><AppstoreOutlined />
+                        Products
+                    </h1>
+                </Col>
+                <Col span={12}>
+                    <div style={{float:"right", marginTop:"15px"}}>
+                        <Button type="primary" onClick={showNewProductModal}>
+                            New Product
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
             <div className="central">
                 <Modal
                     open={isModalOpen}

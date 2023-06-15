@@ -5,6 +5,7 @@ import com.example.mall.kafka.ConsumerThread;
 import com.example.mall.kafka.QueueProducer;
 import com.example.mall.repository.OrdersRepository;
 import com.example.mall.service.OrderService;
+import com.example.mall.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,43 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Map<String, Object> fetchPageOrdersBySellerId(String sellerId, int pageSize, int nthPage) {
+        Pageable pageable = PageRequest.of(nthPage,pageSize);
+        Page<Orders> orders = ordersRepository.findOrdersBySellerId(Long.parseLong(sellerId), pageable);
+        assert orders!=null;
+        Map<String, Object> result = new HashMap<>();
+        List<Map<String, Object>> orderList = new ArrayList<>();
+        for(Orders ordersTemp :orders.getContent()) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("goodsName", ordersTemp.getGoods().getGoodsName());
+            String[] split = ordersTemp.getGoods().getGoodsDetailImages().split(";");
+            if(split.length>=1) {
+                map.put("goodsImage", split[0]);
+            } else {
+                map.put("goodsImage", new String(""));
+            }
+            map.put("goodsNum", ordersTemp.getNum());
+            map.put("orderId", ordersTemp.getId());
+            map.put("goodsId", ordersTemp.getGoods().getId());
+            map.put("address", ordersTemp.getUser().getAddress());
+            map.put("username", ordersTemp.getUser().getUsername());
+            map.put("totalPrice", ordersTemp.getOnSellPrice());
+            map.put("orderStatus", ordersTemp.getOrderStatus());
+            map.put("orderDateTime", DateUtils.formatDateTime(ordersTemp.getOrderDate()));
+            orderList.add(map);
+        }
+        result.put("orders", orderList);
+        result.put("totalElement", orders.getTotalElements());
+        result.put("totalPages", orders.getTotalPages());
+        return result;
+    }
+
+    @Override
+    public Orders findOneById(String orderId) {
+        return ordersRepository.findOneById(orderId);
+    }
+
+    @Override
     public Map<String, Object> fetchPageOrdersByUserId(String userId, int pageSize, int nthPage) {
         Page<Orders> orders = getPageOrdersByUserId(userId, pageSize,nthPage);
         assert orders!=null;
@@ -66,12 +104,14 @@ public class OrderServiceImpl implements OrderService {
             } else {
                 map.put("goodsImage", new String(""));
             }
-            map.put("goodsNum", ordersTemp.getGoods().getGoodsNum());
+            map.put("goodsNum", ordersTemp.getNum());
+            map.put("orderId", ordersTemp.getId());
             map.put("goodsId", ordersTemp.getGoods().getId());
+            map.put("address", ordersTemp.getUser().getAddress());
             map.put("sellerName", ordersTemp.getGoods().getSeller().getSellerName());
             map.put("totalPrice", ordersTemp.getOnSellPrice());
             map.put("orderStatus", ordersTemp.getOrderStatus());
-            map.put("orderDateTime", ordersTemp.getOrderDate());
+            map.put("orderDateTime", DateUtils.formatDateTime(ordersTemp.getOrderDate()));
             orderList.add(map);
         }
         result.put("orders", orderList);
@@ -91,5 +131,10 @@ public class OrderServiceImpl implements OrderService {
             log.error("saveUser错误=>{}",e.getMessage(), e);
             return false;
         }
+    }
+
+    @Override
+    public void deleteOrderById(String orderId) {
+        ordersRepository.deleteById(orderId);
     }
 }

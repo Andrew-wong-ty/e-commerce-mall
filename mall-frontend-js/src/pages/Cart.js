@@ -3,9 +3,9 @@ import React, {useEffect, useState} from "react";
 import {validateJwt} from "../utils/serviceUtils";
 import Constant from "../store/constant";
 import {useNavigate} from "react-router-dom";
-import {Button, Col, Image, Pagination, Row, Table, Tag} from "antd";
+import {Button, Col, Image, message, Pagination, Row, Table, Tag} from "antd";
 import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
-import {postAddOrUpdateCart, postDeleteCart, postGetUserCart} from "../configs/services";
+import {postAddOrUpdateCart, postDeleteCart, postGetUserCart, postMultipleOrdering} from "../configs/services";
 const ButtonGroup = Button.Group;
 
 function Cart() {
@@ -13,6 +13,7 @@ function Cart() {
     const [cartList, setCartList] = useState([])
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [orderDisable, setOrderDisable] = useState(true);
     const [pageSize,setPageSize] = useState(10)
     const [nthPage,setNthPage] = useState(1)
     const [totalItem,setTotalItem] = useState(1)
@@ -54,6 +55,8 @@ function Cart() {
             item => selectedRowKeys.includes(item.key)
         );
         setSelectedGoods(selectedCart);
+        if(selectedRowKeys.length!==0) setOrderDisable(false);
+        else setOrderDisable(true);
     }, [selectedRowKeys])
     useEffect(()=>{
         validateJwt().then(res=>{
@@ -129,6 +132,27 @@ function Cart() {
         })
     }
 
+    const generateOrder = () => {
+        if(userId===-1) {
+            message.error("User is invalid")
+        }
+        const newArray = selectedGoods.map((item) => ({
+            userId: userId, // replace with your user ID
+            goodsId: item.goodsId,
+            goodsNum: item.goodsNum,
+            cartId: item.cartId,
+        }));
+        postMultipleOrdering(newArray).then(res=>{
+            const response = JSON.parse(res.data)
+            if(response.code===200) {
+                message.success("Order is generated, check it at \"My Orders\"")
+                // 重新获取购物车
+                fetchCart()
+                setSelectedRowKeys([])
+            }
+        })
+    }
+
     const columns = [
         {
             title: '',
@@ -187,12 +211,19 @@ function Cart() {
 
     return (
         <div>
+            <h1>Cart</h1>
             <Row>
                 <Col span={12}>
-                    <h1>Cart</h1> <h2>{selectedRowKeys.length} items, totally ${totalPrice.toFixed(2)}</h2>
+                     <h2>{selectedRowKeys.length} items selected, totally ${totalPrice.toFixed(2)}</h2>
                 </Col>
                 <Col span={12}>
-
+                    <div style={{float:"right", marginTop:"15px"}}>
+                        <Button
+                            type="primary"
+                            disabled={orderDisable}
+                            onClick={()=>{generateOrder()}}
+                        >Order now!</Button>
+                    </div>
                 </Col>
             </Row>
 
