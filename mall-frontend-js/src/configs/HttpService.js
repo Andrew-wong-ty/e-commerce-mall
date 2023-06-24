@@ -1,8 +1,9 @@
 import axios from "axios";
 import LocalStorageUtil from "../store/localStorageUtil"
 import Constant from "../store/constant";
+const baseUrl = "http://localhost:8080";
 const httpService = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: baseUrl,
     timeout: 4000,
     headers: {'X-Custom-Header': 'foobar'},
     withCredentials: true,
@@ -33,3 +34,4 @@ httpService.interceptors.response.use(
     }
 )
 export default httpService
+export {baseUrl}

@@ -1,5 +1,6 @@
 package com.example.mall.POJO;
 
+import com.example.mall.constant.GoodsCategory;
 import com.example.mall.constant.GoodsStatus;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -25,7 +26,10 @@ public class Goods {
     private BigDecimal goodsDiscount;//1
     private Long goodsSales;//1
     private Long goodsNum;//1
+    @Column(length = 1023)
     private String goodsDetailImages;//1
+    @Enumerated(EnumType.STRING)
+    private GoodsCategory category;
     @Enumerated(EnumType.STRING)
     private GoodsStatus goodsCurrStatus;//1
 

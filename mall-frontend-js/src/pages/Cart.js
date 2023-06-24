@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {Button, Col, Image, message, Pagination, Row, Table, Tag} from "antd";
 import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
 import {postAddOrUpdateCart, postDeleteCart, postGetUserCart, postMultipleOrdering} from "../configs/services";
+import nothing from "../asset/nothing.png";
 const ButtonGroup = Button.Group;
 
 function Cart() {
@@ -212,39 +213,52 @@ function Cart() {
     return (
         <div>
             <h1>Cart</h1>
-            <Row>
-                <Col span={12}>
-                     <h2>{selectedRowKeys.length} items selected, totally ${totalPrice.toFixed(2)}</h2>
-                </Col>
-                <Col span={12}>
-                    <div style={{float:"right", marginTop:"15px"}}>
-                        <Button
-                            type="primary"
-                            disabled={orderDisable}
-                            onClick={()=>{generateOrder()}}
-                        >Order now!</Button>
-                    </div>
-                </Col>
-            </Row>
+            {cartList.length===0?
+                <div style={{textAlign:"center"}}>
+                    <Image
+                        preview={false}
+                        src={nothing}
+                        width={"50%"}
+                    />
+                </div>
+                :
+            <>
+                <Row>
+                    <Col span={12}>
+                        <h2>{selectedRowKeys.length} items selected, totally ${totalPrice.toFixed(2)}</h2>
+                    </Col>
+                    <Col span={12}>
+                        <div style={{float:"right", marginTop:"15px"}}>
+                            <Button
+                                type="primary"
+                                disabled={orderDisable}
+                                onClick={()=>{generateOrder()}}
+                            >Order now!</Button>
+                        </div>
+                    </Col>
+                </Row>
 
-            <Table
-                rowSelection={rowSelection}
-                columns={columns}
-                loading={loading}
-                dataSource={cartList}
-                pagination={false}
-            />
-            <br/>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <Pagination
-                    showSizeChanger
-                    onShowSizeChange={onShowSizeChange}
-                    onChange={onPageAndSizeChange}
-                    defaultCurrent={nthPage}
-                    total={totalItem}
-                    showTotal={(total) => `Total ${total} items`}
+                <Table
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    loading={loading}
+                    dataSource={cartList}
+                    pagination={false}
                 />
-            </div>
+                <br/>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Pagination
+                        showSizeChanger
+                        onShowSizeChange={onShowSizeChange}
+                        onChange={onPageAndSizeChange}
+                        defaultCurrent={nthPage}
+                        total={totalItem}
+                        showTotal={(total) => `Total ${total} items`}
+                    />
+                </div>
+            </>
+            }
+
         </div>
     )
 }

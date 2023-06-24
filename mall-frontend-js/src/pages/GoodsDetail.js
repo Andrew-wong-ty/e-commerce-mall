@@ -54,7 +54,7 @@ const GoodsDetail = () => {
 
     };
     return (
-        <div>
+        <div style={{marginLeft: "5%",marginRight: "5%"}}>
             <div style={{ marginTop: "30px" }}></div>
             <Card title="Details">
             <Row>

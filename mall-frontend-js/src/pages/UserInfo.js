@@ -1,3 +1,5 @@
+import {updateAvatar} from "../features/userSlice";
+import {baseUrl} from "../configs/HttpService";
 import "./Page.css"
 import {PlusOutlined, UploadOutlined} from '@ant-design/icons';
 import React, {useEffect} from "react";
@@ -9,7 +11,7 @@ import {getUserByUserId, postUpdateUserinfo} from "../configs/services";
 import {Button, Form, Input, message, Upload, Row, Col, Divider} from "antd";
 import {useDispatch} from "react-redux";
 const { TextArea } = Input;
-import {updateAvatar} from "../features/userSlice";
+
 const normFile = (e) => {
     if (Array.isArray(e)) {
         return e;
@@ -116,7 +118,7 @@ function UserInfo() {
                         </Form.Item>
                         <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
                             <Upload
-                                action= 'http://localhost:8080/files/upload'
+                                action= {baseUrl+"/files/upload"}
                                 multiple={false}
                                 listType="picture"
                                 maxCount={1}

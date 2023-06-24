@@ -13,11 +13,17 @@ export const postAccessToken = () => {
     return httpService.post("/security/jwtValidate", jwtToken);
 }
 
+export const postRegister = (data) => httpService.post('/login/register', data)
+
 export const postNewProduct = (data) => httpService.post('/goods/new', data)
 
 export const getProductBySellerId = (data) => httpService.post('/goods/getProductById', data)
 
 export const getAllOnSaleProducts = (data) => httpService.post('/goods/getAllGoods', data)
+
+export const getFuzzySearchProducts = (data) => httpService.post('/goods/fuzzySearch', data)
+
+export const getGoodsByCategory = (data) => httpService.post('/goods/getAllGoodsByCategory', data)
 
 export const getGoodsByGoodsId = (data) => httpService.post('/goods/getGoodsById', data)
 

@@ -30,7 +30,7 @@ function getIconItems(userInfo) {
         return [
             // {label: 'Orders', key: '4', disabled: false},
             {label: 'Products', key: '5', disabled: false},
-            {label: 'Account Info', key: '6', disabled: false},
+            // {label: 'Account Info', key: '6', disabled: false},
             {label: 'Logout', key: '3', disabled: false}
         ]
     } else {

@@ -13,6 +13,9 @@ public class ResponseObject {
     public static ResponseObject success(Object object){
         return new ResponseObject(ResponseObjectEnum.SUCCESS.getCode(),ResponseObjectEnum.SUCCESS.getMessage(),object);
     }
+    public static ResponseObject error(Object object){
+        return new ResponseObject(ResponseObjectEnum.ERROR.getCode(),ResponseObjectEnum.SUCCESS.getMessage(),object);
+    }
     public static ResponseObject error(){
         return new ResponseObject(ResponseObjectEnum.ERROR.getCode(),ResponseObjectEnum.ERROR.getMessage(),null);
     }

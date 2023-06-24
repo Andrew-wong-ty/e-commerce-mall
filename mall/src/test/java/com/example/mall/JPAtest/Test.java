@@ -50,6 +50,15 @@ public class Test {
     }
 
     @org.junit.Test
+    public void fuzzySearch() {
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<Goods> goods = goodsRepository.fuzzySearchByGoodsName("Name7", pageable);
+        goods.forEach(item->{
+            System.out.println(item.getGoodsName());
+        });
+    }
+
+    @org.junit.Test
     public void findOrdersBySellerId() {
         Pageable pageable = PageRequest.of(0, 20);
         Page<Orders> orders = ordersRepository.findOrdersBySellerId(3L,pageable);

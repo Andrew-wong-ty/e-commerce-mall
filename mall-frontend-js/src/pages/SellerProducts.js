@@ -22,6 +22,7 @@ import {
     Row, Col
 } from "antd";
 import LocalStorageUtil from "../store/localStorageUtil";
+import {baseUrl} from "../configs/HttpService";
 const { TextArea } = Input;
 const normFile = (e) => {
     console.log('Upload event:', e);
@@ -95,6 +96,7 @@ function SellerProducts() {
             goodsDescription:record.goodsDescription,
             goodsDiscount:record.goodsDiscount,
             goodsNum:record.goodsNum,
+            goodsCategory:record.category,
             goodsCurrStatus:record.goodsCurrStatus,
         });
         const formattedList = record.goodsDetailImages.map((item) => {
@@ -140,6 +142,7 @@ function SellerProducts() {
                 goodsHeadline:value.goodsHeadline,
                 goodsDescription:value.goodsDescription,
                 goodsDiscount:value.goodsDiscount,
+                goodsCategory:value.goodsCategory,
                 goodsSales:"0",
                 goodsNum:`${value.goodsNum}`,
                 goodsDetailImages:concatenatedUrl,
@@ -306,6 +309,20 @@ function SellerProducts() {
                         <Form.Item label="Description" name="goodsHeadline" rules={GeneralFormRules}>
                             <Input />
                         </Form.Item>
+                        <Form.Item label="Category" name="goodsCategory" rules={GeneralFormRules}>
+                            <Select>
+                                <Select.Option value="BAGS" key="0">BAGS</Select.Option>
+                                <Select.Option value="CAMERAS" key="1">CAMERAS</Select.Option>
+                                <Select.Option value="CLOTHES" key="2">CLOTHES</Select.Option>
+                                <Select.Option value="KIDS" key="3">KIDS</Select.Option>
+                                <Select.Option value="GLASSES" key="4">GLASSES</Select.Option>
+                                <Select.Option value="MOBILE" key="5">MOBILE</Select.Option>
+                                <Select.Option value="MAKEUP" key="6">MAKEUP</Select.Option>
+                                <Select.Option value="SHOES" key="7">SHOES</Select.Option>
+                                <Select.Option value="LAPTOPS" key="8">LAPTOPS</Select.Option>
+                                <Select.Option value="FOOD" key="9">FOOD</Select.Option>
+                            </Select>
+                        </Form.Item>
                         <Form.Item label="Status" name="goodsCurrStatus" rules={GeneralFormRules}>
                             <Select>
                                 <Select.Option value="ON_SALE" key="0">ON SALE</Select.Option>
@@ -327,7 +344,7 @@ function SellerProducts() {
                         </Form.Item>
                     </Form>
                     <Upload
-                        action= 'http://localhost:8080/files/upload'
+                        action= {baseUrl+"/files/upload"}
                         multiple={true}
                         listType="picture"
                         onChange={handleChange}

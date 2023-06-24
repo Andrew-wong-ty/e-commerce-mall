@@ -1,5 +1,6 @@
 package com.example.mall.utils;
 
+import com.example.mall.constant.GoodsCategory;
 import com.example.mall.constant.GoodsStatus;
 
 import java.util.Map;
@@ -16,6 +17,22 @@ public class Constant {
                     {"DELETED", GoodsStatus.DELETED}
             }
         ).collect(Collectors.toMap(data -> (String) data[0], data -> (GoodsStatus) data[1]));
+
+    public final static Map<String, GoodsCategory> STRING_2_CATEGORY = Stream.of(
+            new Object[][] {
+                    {"BAGS", GoodsCategory.BAGS},
+                    {"CAMERAS", GoodsCategory.CAMERAS},
+                    {"CLOTHES", GoodsCategory.CLOTHES},
+                    {"KIDS", GoodsCategory.KIDS},
+                    {"GLASSES", GoodsCategory.GLASSES},
+                    {"MOBILE", GoodsCategory.MOBILE},
+                    {"MAKEUP", GoodsCategory.MAKEUP},
+                    {"SHOES", GoodsCategory.SHOES},
+                    {"LAPTOPS", GoodsCategory.LAPTOPS},
+                    {"FOOD", GoodsCategory.FOOD}
+
+            }
+    ).collect(Collectors.toMap(data -> (String) data[0], data -> (GoodsCategory) data[1]));
 
     public static void main(String[] args) {
         GoodsStatus g = STATUS_STRING_2_OBJECT.get("DOWN");

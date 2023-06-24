@@ -9,7 +9,7 @@ import {
 import React, {useEffect, useState} from "react";
 import {Outlet, Link, useNavigate} from "react-router-dom";
 import "./MainLayout.css"
-import {Layout, Menu, theme, Input, Space, Col, Row, message} from 'antd';
+import {Layout, Menu, theme, Input, Space, Col, Row, message, Dropdown, Button} from 'antd';
 import UserIcon from "../components/UserIcon";
 import {postAccessToken} from "../configs/services";
 import Constant from "../store/constant";
@@ -22,10 +22,7 @@ const MainLayout = () => {
     // const {
     //     token: { colorBgContainer },
     // } = theme.useToken();
-    const searchGoods = (value) => {
-        message.warning("The feature is under developing")
-        console.log("Search:", value);
-    }
+
     const [identity, setIdentity] = useState("-1")
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -42,6 +39,25 @@ const MainLayout = () => {
             dispatch(logoutStatus())
         })
     }, []);
+    const items = [
+        {
+            key: '1',
+            label: (
+                <span onClick={()=>{navigate("sellerOrder")}}>Orders</span>
+            ),
+        }
+    ];
+    const itemsCart = [
+        {
+            key: '2',
+            label: (
+                <span onClick={()=>{navigate("cart")}}>Cart</span>
+            ),
+        }
+    ];
+    const searchGoods = (value) => {
+        navigate("/all",{ state: { search: value }})
+    }
     return (
         <Layout>
             <Header
@@ -85,11 +101,21 @@ const MainLayout = () => {
                     <Col span={2}>
                         {
                             identity===Constant.SELLER_IDENTITY?
-                                <span className="linkIcon" onClick={()=>{navigate("sellerOrder")}}>
-                                    <ScheduleOutlined>
-                                    </ScheduleOutlined>
-                                </span>:
-                                <span className="linkIcon" onClick={()=>{navigate("cart")}}><ShoppingCartOutlined /></span>
+                                <>
+                                    <span key="1" className="linkIcon" onClick={()=>{navigate("sellerOrder")}}>
+                                        <Dropdown menu={{items}} placement="bottom" arrow={{ pointAtCenter: true }}>
+                                          <ScheduleOutlined>
+                                        </ScheduleOutlined>
+                                        </Dropdown>
+
+                                    </span>
+                                </>
+                                :
+                                <>
+                                    <span key="2" className="linkIcon" onClick={()=>{navigate("cart")}} >
+                                        <ShoppingCartOutlined />
+                                    </span>
+                                </>
                         }
                         {/*<span className="linkIcon" onClick={()=>{navigate("cart")}}><ShoppingCartOutlined /></span>*/}
                     </Col>

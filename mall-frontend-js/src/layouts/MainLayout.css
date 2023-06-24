@@ -8,6 +8,7 @@
     font-size: x-large;
     color: azure;
     font-weight: bold;
+    cursor: pointer;
 }
 .headline .linkText {
     font-size: large;
@@ -21,6 +22,7 @@
     color: azure;
     text-align: center;
     margin-left: 50%;
+    cursor: pointer;
 }
 .headline .search {
     margin-top: 16px;
